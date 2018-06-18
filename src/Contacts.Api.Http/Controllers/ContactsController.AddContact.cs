@@ -12,11 +12,11 @@ namespace Contacts.Api.Http
         {
             if(contact!=null)
             {
-                Validate("emailId", contact.Email);
+                Validate("emailId", contact.EmailId);
                 Validate("firstName", contact.FirstName);
                 Validate("lastName", contact.LastName);
                 Validate("phoneNumber", contact.PhoneNumber);                
-                ValidateEmail(contact.Email);
+                ValidateEmail(contact.EmailId);
                 var result = ContactRepositoryInstance.AddContact(
                     AutoMapper.Mapper.
                     Map<Contact, Contacts.Model.Contact>(contact)

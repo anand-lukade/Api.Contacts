@@ -6,7 +6,7 @@ namespace Contacts.Api.Http
     public partial class ContactsController
     {
         [HttpGet]
-        [Route("~/contacts/{emailId}/contact", Name = "RetrieveContact")]
+        [Route("~/contacts/{emailId}/contact", Name = "RetrieveContact")]        
         public IHttpActionResult RetrieveContact(string emailId)
         {
             Validate("emailId", emailId);

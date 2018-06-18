@@ -4,13 +4,8 @@
     {        
         public string FirstName { get; set; }        
         public string LastName { get; set; }        
-        public string Email { get; set; }        
+        public string EmailId { get; set; }        
         public string PhoneNumber { get; set; }        
-        public Status Status { get; set; }
-    }
-    public enum Status
-    {
-        Active,
-        Inactive
-    }
+        public bool Status { get; set; }
+    }   
 }

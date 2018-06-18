@@ -18,11 +18,11 @@ namespace Contacts.Api.Test
             var repositoryMoq = new Moq.Mock<IContactRepository>();
             var contact = new Model.Contact()
             {
-                Email = "anand.lukade@gmail.com",
+                EmailId = "anand.lukade@gmail.com",
                 FirstName = "anand",
                 LastName = "lukade",
                 PhoneNumber = "8007891986",
-                Status = Model.Status.Active
+                Status = true
             };    
             repositoryMoq.Setup(s=>s.GetContact("anand.lukade@gmail.com")).Returns(contact);            
             var controller = new ContactsController(repositoryMoq.Object);
@@ -37,7 +37,7 @@ namespace Contacts.Api.Test
            
             IHttpActionResult actionResult = controller.RetrieveContact("anand.lukade@gmail.com");
              var contentResult = actionResult as OkNegotiatedContentResult<Http.Contact>;
-            Assert.AreEqual(contact.Email, contentResult.Content.Email);            
+            Assert.AreEqual(contact.EmailId, contentResult.Content.EmailId);            
         }
         [TestMethod]
         [TestCategory(TestCategory.UnitTest)]

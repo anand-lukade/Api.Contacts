@@ -5,7 +5,7 @@ namespace Contacts.Repository
 {
     public partial class ContactRepository
     {
-        public List<Contact> GetContacts(int page,int pageSize, out int total)
+        public List<Model.Contact> GetContacts(int page,int pageSize, out int total)
         {
             if (page < 0)
             {
@@ -18,25 +18,25 @@ namespace Contacts.Repository
             }
 
             total = 2;
-             
-            
-            return new List<Contact>()
+
+
+            return new List<Model.Contact>()
             {
-                new Contact()
+                new Model.Contact()
                 {
-                    Email = "anand.lukade@gmail.com",
+                    EmailId = "anand.lukade@gmail.com",
                     FirstName = "anand",
                     LastName="lukade",
                     PhoneNumber="8007891986",
-                    Status=Status.Active
+                    Status=true
                 },
-                new Contact()
+                new Model.Contact()
                 {
-                    Email = "prasad.khandat@gmail.com",
+                    EmailId = "prasad.khandat@gmail.com",
                     FirstName = "prasad",
                     LastName="khandat",
                     PhoneNumber="8007691986",
-                    Status=Status.Inactive
+                    Status=false
                 }
             };
         }

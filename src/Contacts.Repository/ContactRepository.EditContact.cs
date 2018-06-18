@@ -4,7 +4,7 @@ namespace Contacts.Repository
 {
     public partial class ContactRepository
     {       
-        public Contact EditContact(string emailId, Contact contact)
+        public Model.Contact EditContact(string emailId, Model.Contact contact)
         {
             throw new System.NotImplementedException();
         }       

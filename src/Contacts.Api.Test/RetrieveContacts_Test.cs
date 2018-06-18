@@ -22,19 +22,19 @@ namespace Contacts.Api.Test
             {
                new Model.Contact()
                 {
-                    Email = "anand.lukade@gmail.com",
+                    EmailId = "anand.lukade@gmail.com",
                     FirstName = "anand",
                     LastName="lukade",
                     PhoneNumber="8007891986",
-                    Status=Model.Status.Active
+                    Status=true
                 },
                 new Model.Contact()
                 {
-                    Email = "prasad.khandat@gmail.com",
+                    EmailId = "prasad.khandat@gmail.com",
                     FirstName = "prasad",
                     LastName="khandat",
                     PhoneNumber="8007691986",
-                    Status=Model.Status.Inactive
+                    Status=true
                 }
             };
             int totalRecord;
@@ -52,7 +52,7 @@ namespace Contacts.Api.Test
            
             IHttpActionResult actionResult = controller.RetrieveContacts(1,2);
              var contentResult = actionResult as OkNegotiatedContentResult<ResourceCollection<Http.Contact>>;
-            Assert.AreEqual(list[0].Email, contentResult.Content.Items[0].Email);            
+            Assert.AreEqual(list[0].EmailId, contentResult.Content.Items[0].EmailId);            
         }
     }
 }

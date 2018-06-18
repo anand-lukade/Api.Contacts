@@ -18,19 +18,19 @@ namespace Contacts.Api.Test
             var response = new HttpResponseMessage(System.Net.HttpStatusCode.Created);
             var contactRequest = new Contact()
             {
-                Email = "anand.lukade@gmail.com",
+                EmailId = "anand.lukade@gmail.com",
                 FirstName = "anand",
                 LastName = "lukade",
                 PhoneNumber = "8007891986",
-                Status = Status.Active
+                Status = true
             };
             var contact = new Model.Contact()
             {
-                Email = "anand.lukade@gmail.com",
+                EmailId = "anand.lukade@gmail.com",
                 FirstName = "anand",
                 LastName = "lukade",
                 PhoneNumber = "8007891986",
-                Status = Model.Status.Active
+                Status = true
             };
             repositoryMoq.Setup(s=>s.AddContact(contact)).Returns(contact);            
             var controller = new ContactsController(repositoryMoq.Object);

@@ -1,20 +1,28 @@
 ﻿using Contacts.Model;
+using System.Linq;
 
 namespace Contacts.Repository
 {
     public partial class ContactRepository
     {      
-        public Contact GetContact(string emailId)
+        public Model.Contact GetContact(string emailId)
         {
             Validate("emailId",emailId);
-            return new Contact()
+            BlahEntities entity = new BlahEntities();
+            var item = entity.Contacts.FirstOrDefault(x => x.EmailId.Equals(emailId, System.StringComparison.OrdinalIgnoreCase));
+            Model.Contact contact = null;
+            if (item != null)
             {
-                Email = "anand.lukade@gmail.com",
-                FirstName = "anand",
-                LastName="lukade",
-                PhoneNumber="8007891986",
-                Status=Status.Active
-            };
+                contact = new Model.Contact()
+                {
+                    EmailId = item.EmailId,
+                    FirstName = item.FirstName,
+                    LastName = item.LastName,
+                    PhoneNumber = item.PhoneNumber,
+                    Status = (bool)item.Status
+                };
+            }
+            return contact;
         }       
     }
 }

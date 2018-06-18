@@ -1,5 +1,4 @@
-﻿using Contacts.Model;
-namespace Contacts.Repository
+﻿namespace Contacts.Repository
 {
     public partial class ContactRepository
     {       

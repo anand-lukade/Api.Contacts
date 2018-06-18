@@ -6,9 +6,8 @@ namespace Contacts.Api.Http
 {
     public partial class ContactsController
     {
-        [HttpGet]
-        
-        [Route("~/contacts", Name = "RetrieveContacts")]
+        [HttpGet]        
+        [Route("~/contacts", Name = "RetrieveContacts")]        
         public IHttpActionResult RetrieveContacts(int page=1, int pageSize=10)
         {
             int totalRecords;
