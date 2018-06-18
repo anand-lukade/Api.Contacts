@@ -1,0 +1,13 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/packages/**
+/.vs/**
+/src/**/bin/Debug/*.*
+/src/**/obj/Debug/*.*
+/src/**/bin/Release/*.*
+/src/**/obj/Release/*.*
+**/roslyn/*.*
+*.xml
+
