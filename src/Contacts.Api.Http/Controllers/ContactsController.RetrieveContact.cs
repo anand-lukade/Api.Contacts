@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http;
 
 namespace Contacts.Api.Http
@@ -11,19 +13,35 @@ namespace Contacts.Api.Http
         {
             Validate("emailId", emailId);
             ValidateEmail(emailId);
-
-            var contact = ContactRepositoryInstance.GetContact(emailId);
-            if (contact != null)
+            try
             {
-                var result = AutoMapper.Mapper.
-                        Map<Contacts.Model.Contact, Contact>
-                        (contact);
+                var contact = ContactRepositoryInstance.GetContact(emailId);
+                if (contact != null)
+                {
+                    var result = AutoMapper.Mapper.
+                            Map<Model.Contact, Contact>
+                            (contact);
 
-                return Ok(result);
+                    return Ok(result);
+                }
+                else
+                {
+                    var resp = new HttpResponseMessage(HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent(string.Format("No record found for = {0}", emailId)),
+                        ReasonPhrase = "EmailID Not Found"
+                    };
+                    throw new HttpResponseException(resp);
+                }
             }
-            else
+            catch(Exception exception)
             {
-                throw new ArgumentException($"No record found for {emailId}");
+                var resp = new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                {
+                    Content = new StringContent(string.Format("internal error for = {0}", emailId)),
+                    ReasonPhrase = exception.Message
+                };
+                throw new HttpResponseException(resp);
             }
         }
     }

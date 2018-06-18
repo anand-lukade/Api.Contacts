@@ -1,5 +1,7 @@
 ﻿using Contacts.Model;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Contacts.Repository
 {
@@ -16,29 +18,32 @@ namespace Contacts.Repository
             {
                 pageSize = 10;
             }
-
-            total = 2;
-
-
-            return new List<Model.Contact>()
+            List<Model.Contact> contacts = new List<Model.Contact>();
+            try
             {
-                new Model.Contact()
+                using (BlahEntities entity = new BlahEntities())
                 {
-                    EmailId = "anand.lukade@gmail.com",
-                    FirstName = "anand",
-                    LastName="lukade",
-                    PhoneNumber="8007891986",
-                    Status=true
-                },
-                new Model.Contact()
-                {
-                    EmailId = "prasad.khandat@gmail.com",
-                    FirstName = "prasad",
-                    LastName="khandat",
-                    PhoneNumber="8007691986",
-                    Status=false
+                    total = entity.Contacts.Count();
+                    var items = entity.Contacts.ToList().Take(10).Skip((page - 1) * 10);
+                    
+                    foreach (var item in items)
+                    {
+                        contacts.Add(new Model.Contact()
+                        {
+                            EmailId = item.EmailId,
+                            FirstName = item.FirstName,
+                            LastName = item.LastName,
+                            PhoneNumber = item.PhoneNumber,
+                            Status = (bool)item.Status
+                        });                        
+                    }                    
                 }
-            };
+            }
+            catch (Exception exception)
+            {
+                throw new ApplicationException(exception.Message);
+            }            
+            return contacts;
         }
     }
 }
