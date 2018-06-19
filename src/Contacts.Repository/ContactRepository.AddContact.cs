@@ -25,7 +25,8 @@ namespace Contacts.Repository
                         Status = (bool)contact.Status,
                     };
                     Contact result = entity.Contacts.Add(contactToAdd);
-                    if (result==null)
+                    int added=entity.SaveChanges();
+                    if (added<=0)
                     {
                         throw new ApplicationException("Record Not updated");
                     }

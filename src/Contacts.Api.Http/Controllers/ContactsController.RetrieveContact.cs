@@ -34,11 +34,20 @@ namespace Contacts.Api.Http
                     throw new HttpResponseException(resp);
                 }
             }
-            catch(Exception exception)
+            catch (ArgumentException exception)
+            {
+                var resp = new HttpResponseMessage(HttpStatusCode.BadRequest)
+                {
+                    Content = new StringContent(string.Format(exception.Message)),
+                    ReasonPhrase = exception.Message
+                };
+                throw new HttpResponseException(resp);
+            }
+            catch (Exception exception)
             {
                 var resp = new HttpResponseMessage(HttpStatusCode.InternalServerError)
                 {
-                    Content = new StringContent(string.Format("internal error for = {0}", emailId)),
+                    Content = new StringContent(string.Format(exception.Message)),
                     ReasonPhrase = exception.Message
                 };
                 throw new HttpResponseException(resp);

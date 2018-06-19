@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
@@ -20,12 +21,24 @@ namespace Contacts.Api.Http
                 Validate("lastName", contact.LastName);
                 Validate("phoneNumber", contact.PhoneNumber);
                 ValidateEmail(contact.EmailId);
-                var result = ContactRepositoryInstance.EditContact(
+                try
+                {
+                    var result = ContactRepositoryInstance.EditContact(
                     emailId,
                     AutoMapper.Mapper.
                     Map<Contact, Contacts.Model.Contact>(contact)
                     );
-                return this.Request.CreateResponse(System.Net.HttpStatusCode.Accepted, result);
+                    return this.Request.CreateResponse(System.Net.HttpStatusCode.Accepted, result);
+                }
+                catch (Exception exception)
+                {
+                    var resp = new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                    {
+                        Content = new StringContent(exception.Message),
+                        ReasonPhrase = "internal error"
+                    };
+                    throw new HttpResponseException(resp);
+                }            
             }
             else
             {

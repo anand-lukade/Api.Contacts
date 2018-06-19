@@ -24,7 +24,7 @@ namespace Contacts.Repository
                 using (BlahEntities entity = new BlahEntities())
                 {
                     total = entity.Contacts.Count();
-                    var items = entity.Contacts.ToList().Take(10).Skip((page - 1) * 10);
+                    var items = entity.Contacts.OrderBy(x=>x.EmailId).Skip((page - 1) * pageSize).Take(pageSize);
                     
                     foreach (var item in items)
                     {

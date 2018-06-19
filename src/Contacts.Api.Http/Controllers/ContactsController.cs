@@ -2,6 +2,7 @@
 using Contacts.Repository;
 using System;
 using System.Net;
+using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Web.Http;
 
@@ -29,7 +30,12 @@ namespace Contacts.Api.Http
             if (string.IsNullOrEmpty(value) ||
                 string.IsNullOrWhiteSpace(value))
             {
-                throw new ArgumentNullException($"{key} is required");
+                var resp = new HttpResponseMessage(HttpStatusCode.BadRequest)
+                {
+                    Content = new StringContent(string.Format("invalid = {0}", key)),
+                    ReasonPhrase = "Bad request"
+                };
+                throw new HttpResponseException(resp);
             }
         }
         private void ValidateEmail(string email)
@@ -37,7 +43,14 @@ namespace Contacts.Api.Http
             Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
             Match match = regex.Match(email);
             if (!match.Success)
-                throw new ArgumentException("invalid email");
+            {
+                var resp = new HttpResponseMessage(HttpStatusCode.BadRequest)
+                {
+                    Content = new StringContent(string.Format("invalid = {0}", email)),
+                    ReasonPhrase = "Bad request"
+                };
+                throw new HttpResponseException(resp);
+            }
         }
     }
 }

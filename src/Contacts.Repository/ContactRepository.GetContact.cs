@@ -10,13 +10,19 @@ namespace Contacts.Repository
         {
             Validate("emailId",emailId);
             Model.Contact contact = null;
-            try
-            {
+           
                 using (BlahEntities entity = new BlahEntities())
                 {
-                    var item = entity.Contacts.FirstOrDefault(x => x.EmailId.Equals(emailId, System.StringComparison.OrdinalIgnoreCase));
-
-                    if (item != null)
+                Contact item = null;
+                try
+                {
+                    item = entity.Contacts.FirstOrDefault(x => x.EmailId.ToLower()==emailId);
+                }
+                catch (Exception exception)
+                {
+                    throw new ApplicationException(exception.Message);
+                }
+                if (item != null)
                     {
                         contact = new Model.Contact()
                         {
@@ -27,12 +33,12 @@ namespace Contacts.Repository
                             Status = (bool)item.Status
                         };
                     }
+                    else
+                    {
+                        throw new ArgumentException("no data found for" + emailId);
+                    }
                 }
-            }
-            catch(Exception exception)
-            {
-                throw new ApplicationException(exception.Message);
-            }
+            
             return contact;
         }       
     }

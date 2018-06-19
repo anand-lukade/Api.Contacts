@@ -17,12 +17,11 @@ namespace Contacts.Repository
                     Contact item = entity.Contacts.FirstOrDefault(x => x.EmailId.Equals(emailId, System.StringComparison.OrdinalIgnoreCase));
 
                     if (item != null)
-                    {
-                        item.EmailId = item.EmailId;
-                        item.FirstName = item.FirstName;
-                        item.LastName = item.LastName;
-                        item.PhoneNumber = item.PhoneNumber;
-                        item.Status = (bool)item.Status;                       
+                    {                        
+                        item.FirstName = contact.FirstName;
+                        item.LastName = contact.LastName;
+                        item.PhoneNumber = contact.PhoneNumber;
+                        item.Status = (bool)contact.Status;                       
                     }
                     int k=entity.SaveChanges();
                     if(k<=0)
@@ -30,6 +29,7 @@ namespace Contacts.Repository
                         throw new ApplicationException("Record Not updated");
                     }
                 }
+                contact.EmailId = emailId;
             }
             catch (Exception exception)
             {

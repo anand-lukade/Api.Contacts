@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Net.Http;
 using System.Web.Http;
 
 namespace Contacts.Api.Http
@@ -9,12 +10,23 @@ namespace Contacts.Api.Http
         [HttpDelete]
         [Route("~/contacts/{emailId}", Name = "RemoveContact")]
         
-        public IHttpActionResult RemoveContact(string emailId)
+        public void RemoveContact(string emailId)
         {
             Validate("emailId", emailId);
             ValidateEmail(emailId);
-            ContactRepositoryInstance.RemoveContact(emailId);            
-            return Ok();
+            try
+            {
+                ContactRepositoryInstance.RemoveContact(emailId);
+            }
+            catch (Exception exception)
+            {
+                var resp = new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                {
+                    Content = new StringContent(exception.Message),
+                    ReasonPhrase = "internal error"
+                };
+                throw new HttpResponseException(resp);
+            }          
         }
     }
 }
